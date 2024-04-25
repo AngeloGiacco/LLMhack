@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 
 st.title("Genetic Variant Analysis Bot")
 
