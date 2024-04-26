@@ -1,4 +1,6 @@
 import xml.etree.ElementTree as ET
+import requests
+
 def clinvar_rcv_retriever(rcv):
     """
     Collection of variant information through ClinVar API
