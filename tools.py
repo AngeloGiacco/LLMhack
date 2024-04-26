@@ -16,10 +16,6 @@ tools_json = [
                     }
                 },
                 "required": ["rsid"]
-            },
-            "return": {
-                "type": "object",
-                "description": "Data dictionary from the API response, potentially containing a wide array of variant details."
             }
         }
     },
@@ -37,14 +33,6 @@ tools_json = [
                     }
                 },
                 "required": ["rsid"]
-            },
-            "return": {
-                "type": "object",
-                "description": """The total number of results on the server, which can be more than the number of results returned. This reported total number of results may also be significantly less than the actual number of results and is limited to 10,000, which may significantly improve the service response time.
-    An array of codes for the returned items. (This is the field specified with the cf query parameter above.)
-    A hash of the "extra" data requested via the "ef" query parameter above. The keys on the hash are the fields (or their requested aliases) named in the "ef" parameter, and the value for a field is an array of that field's values in the same order as the returned codes.
-    An array, with one element for each returned code, where each element is an array of the display strings specified with the "df" query parameter.
-    An array, with one element for each returned code, where each element is the "code system" for the returned code. Note that only code-system aware APIs will return this array."""
             }
         }
     },
@@ -62,15 +50,6 @@ tools_json = [
                     }
                 },
                 "required": ["rsid"]
-            },
-            "return": {
-                "type": "object",
-                "description": """Output for an API query is an array of the following elements:
-The total number of results on the server, which can be more than the number of results returned. This reported total number of results may also be significantly less than the actual number of results and is limited to 10,000, which may significantly improve the service response time.
-An array of codes for the returned items. (This is the field specified with the cf query parameter above.)
-A hash of the "extra" data requested via the "ef" query parameter above. The keys on the hash are the fields (or their requested aliases) named in the "ef" parameter, and the value for a field is an array of that field's values in the same order as the returned codes.
-An array, with one element for each returned code, where each element is an array of the display strings specified with the "df" query parameter.
-An array, with one element for each returned code, where each element is the "code system" for the returned code. Note that only code-system aware APIs will return this array."""
             }
         }
     },
@@ -88,10 +67,6 @@ An array, with one element for each returned code, where each element is the "co
                     }
                 },
                 "required": ["id"]
-            },
-            "return": {
-                "type": "object",
-                "description": "Data dictionary with variant consequences."
             }
         }
     },
@@ -109,10 +84,6 @@ An array, with one element for each returned code, where each element is the "co
                     }
                 },
                 "required": ["hgvs_code"]
-            },
-            "return": {
-                "type": "object",
-                "description": "Data dictionary with variant consequences."
             }
         }
     },
@@ -134,10 +105,6 @@ An array, with one element for each returned code, where each element is the "co
                     }
                 },
                 "required": ["region", "allele"]
-            },
-            "return": {
-                "type": "object",
-                "description": "Data dictionary with variant consequences."
             }
         }
     },
@@ -163,13 +130,12 @@ An array, with one element for each returned code, where each element is the "co
                     }
                 },
                 "required": ["chromosome_coordinate", "original_reference_allele", "new_allele"]
-            },
-            "return": {
-                "type": "string",
-                "description": "JSON data containing parsed results from MutationTaster, including prediction, model, potential disease links, etc."
-            } 
+            }
         }
-    },
+    }
+]
+
+'''
     {
         "type": "function",
         "function": {
@@ -180,19 +146,13 @@ An array, with one element for each returned code, where each element is the "co
                 "properties": {
                     "rcv": {
                         "type": "string",
-                        "description": "A ClinVar RCV accession code",
-                        "example":"RCV000009910"
+                        "description": "A ClinVar RCV accession code, for example: RCV000009910",
                     }
                 },
                 "required": ["rcv"]
-            },
-            "return": {
-                "type": "object",
-                "description": "Analyzed ClinVar data"
             }
         }
-    }
-]
+    }'''
 
 def tool_query_gnomad_by_rsid(rsid):
     """calls the gnomad api and filters by rsid of the variant, returning all fields possible"""
