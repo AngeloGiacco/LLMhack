@@ -1,6 +1,7 @@
 import requests
+import json
 
-tools = [
+tools_json = [
     {
         "type": "function",
         "function": {
@@ -44,6 +45,32 @@ tools = [
     A hash of the "extra" data requested via the "ef" query parameter above. The keys on the hash are the fields (or their requested aliases) named in the "ef" parameter, and the value for a field is an array of that field's values in the same order as the returned codes.
     An array, with one element for each returned code, where each element is an array of the display strings specified with the "df" query parameter.
     An array, with one element for each returned code, where each element is the "code system" for the returned code. Note that only code-system aware APIs will return this array."""
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "tool_query_genomic_structural_variation_db_by_rsid",
+            "description": "Queries the Database of Genomic Structural Variation (dbVar) data set provided by NCBI. The subset served by this API is the germline data for assembly GRCh37.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "rsid": {
+                        "type": "string",
+                        "description": "The rsid of the variant"
+                    }
+                },
+                "required": ["rsid"]
+            },
+            "return": {
+                "type": "object",
+                "description": """Output for an API query is an array of the following elements:
+The total number of results on the server, which can be more than the number of results returned. This reported total number of results may also be significantly less than the actual number of results and is limited to 10,000, which may significantly improve the service response time.
+An array of codes for the returned items. (This is the field specified with the cf query parameter above.)
+A hash of the "extra" data requested via the "ef" query parameter above. The keys on the hash are the fields (or their requested aliases) named in the "ef" parameter, and the value for a field is an array of that field's values in the same order as the returned codes.
+An array, with one element for each returned code, where each element is an array of the display strings specified with the "df" query parameter.
+An array, with one element for each returned code, where each element is the "code system" for the returned code. Note that only code-system aware APIs will return this array."""
             }
         }
     },
@@ -359,17 +386,26 @@ def tool_query_gnomad_by_rsid(rsid):
     else:
         print("API request failed. Status code:", response.status_code)
         return None
-
-def tool_query_single_nucleotide_polymorphisms_db_by_rsid(rsid):
+    
+def tool_query_genomic_structural_variation_db_by_rsid(rsid):
+    end_point = f"https://clinicaltables.nlm.nih.gov/api/dbvar/v3/search?terms={rsid}"
     response = requests.get(end_point)
     if response.status_code == 200:
         data_dict = response.json()
-        return data_dict #figure out how to use output explanation
+        return data_dict
     else:
         print("API request failed. Status code:", response.status_code)
         return None
-    
-    Query 
+
+def tool_query_single_nucleotide_polymorphisms_db_by_rsid(rsid):
+    end_point = f"https://clinicaltables.nlm.nih.gov/api/snps/v3/search?terms={rsid}"
+    response = requests.get(end_point)
+    if response.status_code == 200:
+        data_dict = response.json()
+        return data_dict
+    else:
+        print("API request failed. Status code:", response.status_code)
+        return None
 
 def tool_get_variant_consequences_by_id(id):
     """id supports dbSNP, COSMIC and HGMD identifiers"""
